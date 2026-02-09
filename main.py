@@ -1,7 +1,7 @@
 import tkinter as tk
-from ui import FishyGuardUI
+from ui import PhishingUI
 
 if __name__ == "__main__":
     root = tk.Tk()
-    app = FishyGuardUI(root)
+    app = PhishingUI(root)
     root.mainloop()
