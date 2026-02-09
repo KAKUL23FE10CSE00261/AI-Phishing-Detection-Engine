@@ -1,9 +1,8 @@
-
 import sqlite3
 from datetime import datetime
 
 class PredictionHistory:
-    def __init__(self, db_path="C:/Users/Pranay/OneDrive/Desktop/Projects/FishyGuard/history.db"):
+    def __init__(self, db_path="history.db"):
         self.db_path = db_path
         self.init_db()
 
@@ -39,11 +38,10 @@ class PredictionHistory:
         conn.close()
         return rows
 
-if __name__ == '__main__':
-    db = PredictionHistory()
-    db.add_prediction("Test email", "Phishing", 0.99)
-    db.add_prediction("Another test", "Safe", 0.95)
-    
-    print("All predictions:")
-    for row in db.get_all_predictions():
-        print(row)
+    def get_stats(self):
+        conn = sqlite3.connect(self.db_path)
+        cursor = conn.cursor()
+        cursor.execute("SELECT prediction, COUNT(*) FROM predictions GROUP BY prediction")
+        stats = dict(cursor.fetchall())
+        conn.close()
+        return {"Safe": stats.get("Safe", 0), "Phishing": stats.get("Phishing", 0)}
