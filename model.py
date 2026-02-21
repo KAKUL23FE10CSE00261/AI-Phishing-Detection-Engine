@@ -11,14 +11,14 @@ class PhishingModel:
         
         # Hybrid Layer: Heuristic whitelist
         if "my name is pranay" in text_lower or "manipal university" in text_lower:
-            return "Safe", 1.0
+            return {"label": "Safe", "score": 1.0}
             
         # AI Transformer Layer
         result = self.pipe(text)[0]
         label = result['label']
         score = result['score']
         
-        if label == 'LABEL_1':
-            return "Phishing", score
-        else:
-            return "Safe", score
+        # Map model labels to UI strings
+        final_label = "Phishing" if label == 'LABEL_1' else "Safe"
+        
+        return {"label": final_label, "score": score}
