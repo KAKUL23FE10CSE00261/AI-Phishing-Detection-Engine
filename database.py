@@ -45,3 +45,18 @@ class PredictionHistory:
         stats = dict(cursor.fetchall())
         conn.close()
         return {"Safe": stats.get("Safe", 0), "Phishing": stats.get("Phishing", 0)}
+
+    def get_daily_trends(self):
+        conn = sqlite3.connect(self.db_path)
+        cursor = conn.cursor()
+        cursor.execute("""
+            SELECT DATE(timestamp), COUNT(*) 
+            FROM predictions 
+            WHERE prediction = 'Phishing' 
+            GROUP BY DATE(timestamp) 
+            ORDER BY DATE(timestamp) ASC 
+            LIMIT 7
+        """)
+        trends = cursor.fetchall()
+        conn.close()
+        return trends
