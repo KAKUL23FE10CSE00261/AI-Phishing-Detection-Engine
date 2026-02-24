@@ -60,3 +60,10 @@ class PredictionHistory:
         trends = cursor.fetchall()
         conn.close()
         return trends
+
+    def clear_history(self):
+        conn = sqlite3.connect(self.db_path)
+        cursor = conn.cursor()
+        cursor.execute("DELETE FROM predictions")
+        conn.commit()
+        conn.close()
