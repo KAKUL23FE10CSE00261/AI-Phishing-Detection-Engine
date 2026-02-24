@@ -2,16 +2,19 @@ import tkinter as tk
 from ui import PhishingUI
 from model import PhishingModel
 from database import PredictionHistory
+from analyst import PhishingAnalyst
 
 def main():
+
+    API_KEY = "AIzaSyC_fKopiM4ixcY8j4_7wP2sQ6FTEJrbHxo"
+    
     root = tk.Tk()
     
-    # stttart logic and database first
     model_engine = PhishingModel()
     db = PredictionHistory()
+    analyst = PhishingAnalyst(api_key=API_KEY)
     
-    # Pass them into the UI
-    app = PhishingUI(root, model_engine, db)
+    app = PhishingUI(root, model_engine, db, analyst=analyst)
     
     root.mainloop()
 
