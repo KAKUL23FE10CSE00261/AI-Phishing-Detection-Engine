@@ -6,7 +6,7 @@ from analyst import PhishingAnalyst
 
 def main():
 
-    API_KEY = "AIzaSyC_fKopiM4ixcY8j4_7wP2sQ6FTEJrbHxo"
+    API_KEY = "FOR SECURITY PURPOSES I CANNOT LIST API KEY HERE"
     
     root = tk.Tk()
     
