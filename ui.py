@@ -4,12 +4,13 @@ import matplotlib.pyplot as plt
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 
 class PhishingUI:
-    def __init__(self, root, model_engine, db):
+    def __init__(self, root, model_engine, db, analyst=None):
         self.root = root
         self.model = model_engine
         self.db = db
+        self.analyst = analyst
         self.root.title("AI Phishing Detector")
-        self.root.geometry("700x600")
+        self.root.geometry("700x650")
         self.setup_ui()
 
     def setup_ui(self):
@@ -45,7 +46,25 @@ class PhishingUI:
 
         self.db.add_prediction(email_content, prediction, score)
         self.load_history()
-        messagebox.showinfo("Result", f"This email is: {prediction}\nConfidence: {score:.2f}")
+
+        msg = f"This email is: {prediction}\nConfidence: {score:.2f}"
+        
+        if prediction == "Phishing" and self.analyst:
+            if messagebox.askyesno("Phishing Detected", f"{msg}\n\nWould you like an AI Forensic Deep-Dive?"):
+                self.run_deep_dive(email_content)
+        else:
+            messagebox.showinfo("Result", msg)
+
+    def run_deep_dive(self, text):
+        analysis = self.analyst.analyze_threat(text)
+        dive_window = Toplevel(self.root)
+        dive_window.title("Forensic Analysis Report")
+        dive_window.geometry("500x400")
+        
+        report_text = tk.Text(dive_window, wrap=tk.WORD, padx=10, pady=10)
+        report_text.insert(tk.END, analysis)
+        report_text.config(state=tk.DISABLED)
+        report_text.pack(fill=BOTH, expand=True)
 
     def load_history(self):
         for i in self.history_tree.get_children():
@@ -54,24 +73,24 @@ class PhishingUI:
             self.history_tree.insert("", tk.END, values=(row[0], row[2], f"{row[3]:.2f}", row[4]))
 
     def clear_ui_history(self):
-        # Implementation for clearing database can go here
-        pass
+        if messagebox.askyesno("Confirm", "Are you sure you want to delete all history?"):
+            self.db.clear_history()
+            self.load_history()
+            messagebox.showinfo("Success", "History cleared successfully.")
 
     def show_dashboard(self):
         stats = self.db.get_stats()
         trends = self.db.get_daily_trends()
-
         dashboard_window = Toplevel(self.root)
         dashboard_window.title("Security Analytics Dashboard")
         dashboard_window.geometry("900x500")
 
         fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(10, 5))
-
         labels = list(stats.keys())
         values = list(stats.values())
         
         if any(values):
-            ax1.pie(values, labels=labels, autopct='%1.1f%%', startangle=140, colors=['#F44336', '#4CAF50'])
+            ax1.pie(values, labels=labels, autopct='%1.1f%%', startangle=140, colors=['#4CAF50', '#F44336'])
         ax1.set_title("Total Detection Distribution")
 
         if trends:
