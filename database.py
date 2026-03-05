@@ -33,7 +33,7 @@ class PredictionHistory:
     def get_all_predictions(self):
         conn = sqlite3.connect(self.db_path)
         cursor = conn.cursor()
-        cursor.execute("SELECT * FROM predictions ORDER BY timestamp DESC")
+        cursor.execute("SELECT * FROM predictions ORDER BY id DESC")
         rows = cursor.fetchall()
         conn.close()
         return rows
@@ -64,6 +64,10 @@ class PredictionHistory:
     def clear_history(self):
         conn = sqlite3.connect(self.db_path)
         cursor = conn.cursor()
+        
         cursor.execute("DELETE FROM predictions")
+        
+        cursor.execute("DELETE FROM sqlite_sequence WHERE name='predictions'")
+        
         conn.commit()
         conn.close()
