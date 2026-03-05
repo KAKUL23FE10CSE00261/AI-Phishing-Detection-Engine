@@ -10,7 +10,7 @@ class PhishingUI:
         self.db = db
         self.analyst = analyst
         
-        self.root.title("Aegis Phish-Guard v2.0")
+        self.root.title("AI-Phishing-Detection-Engine")
         self.root.geometry("1000x700")
         self.root.configure(bg="#0f172a")
         
@@ -37,7 +37,7 @@ class PhishingUI:
         self.sidebar = tk.Frame(self.root, bg="#1e293b", width=220)
         self.sidebar.pack(side="left", fill="y")
         
-        tk.Label(self.sidebar, text="AI-Phishing-Detection-Engine", font=("Segoe UI", 18, "bold"), 
+        tk.Label(self.sidebar, text="FISHY-GUARD", font=("Segoe UI", 18, "bold"), 
                  bg="#1e293b", fg="#38bdf8").pack(pady=20)
         
         btn_config = {"font": ("Segoe UI", 10, "bold"), "relief": "flat", "padx": 10, "pady": 10, "cursor": "hand2"}
@@ -173,3 +173,4 @@ class PhishingUI:
         canvas = FigureCanvasTkAgg(fig, master=dashboard_window)
         canvas.draw()
         canvas.get_tk_widget().pack(fill=BOTH, expand=True, padx=10, pady=10)
+
