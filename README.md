@@ -202,3 +202,6 @@ AI Explanation:
   SQLite
   Matplotlib
   Google Gemini API
+
+
+⚠️ Disclaimer: This tool is for educational and research purposes only. It is designed to assist in the identification of phishing attempts but should not be used as the sole security measure in a production environment.
