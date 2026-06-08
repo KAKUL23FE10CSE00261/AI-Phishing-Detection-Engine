@@ -46,7 +46,7 @@ def get_ai_prediction(text):
     
     return simulated_response
 
-DB_PATH = "C:/Users/Pranay/OneDrive/Desktop/Projects/FishyGuard/history.db"
+DB_PATH = "history.db"
 
 def init_db():
     conn = sqlite3.connect(DB_PATH)
