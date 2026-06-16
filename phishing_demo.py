@@ -26,7 +26,7 @@ def get_ai_prediction(text):
     phishing_keywords = ["verify your account", "suspended", "urgent", "confirm your", "prize", "winner", "claim now", "overdue", "limited time", "compromised"]
     is_phishing = any(keyword in text_lower for keyword in phishing_keywords)
     
-    if "my name is pranay" in text_lower:
+    if "my name is kakul" in text_lower:
         is_phishing = False
 
     if is_phishing:
@@ -80,7 +80,7 @@ st.markdown("""
 
 st.title("Phishing Detection — AI Demo")
 st.write("Paste an email or message below. A powerful AI will classify it and provide an explanation.")
-st.write("Pranay Kriplani")
+st.write("Kakul Barsaiya")
 
 TRANSLUCENT_RED = "rgba(255, 75, 75, 0.4)"   
 TRANSLUCENT_BLUE = "rgba(48, 133, 195, 0.4)" 
